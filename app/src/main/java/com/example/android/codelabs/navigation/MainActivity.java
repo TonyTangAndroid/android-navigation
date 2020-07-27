@@ -3,18 +3,16 @@ package com.example.android.codelabs.navigation;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
   private AppBarConfiguration appBarConfiguration;
@@ -36,13 +34,7 @@ public class MainActivity extends AppCompatActivity {
     appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
 
     // You should also remove the old appBarConfiguration setup above
-    DrawerLayout drawerLayout = null;
-    Set<Integer> topLevelDestinations = new HashSet<>();
-    topLevelDestinations.add(R.id.home_dest);
-    topLevelDestinations.add(R.id.deeplink_dest);
-
     setupActionBar(navController, appBarConfiguration);
-
     setupBottomNavMenu(navController);
   }
 
@@ -66,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
+  public boolean onOptionsItemSelected(@NonNull MenuItem item) {
     return NavigationUI.onNavDestinationSelected(
             item, Navigation.findNavController(this, R.id.my_nav_host_fragment))
         || super.onOptionsItemSelected(item);

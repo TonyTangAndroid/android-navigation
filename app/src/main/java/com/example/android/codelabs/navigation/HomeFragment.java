@@ -25,7 +25,7 @@ public class HomeFragment extends Fragment {
   }
 
   @Override
-  public void onViewCreated(View view, Bundle savedInstanceState) {
+  public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
     Button button = view.findViewById(R.id.navigate_destination_button);
@@ -33,7 +33,7 @@ public class HomeFragment extends Fragment {
         new View.OnClickListener() {
           @Override
           public void onClick(View view) {
-            Navigation.findNavController(getView()).navigate(R.id.flow_step_one_dest, null);
+            Navigation.findNavController(view).navigate(R.id.flow_step_one_dest, null);
           }
         });
     NavOptions.Builder navOptionsBuilder = new NavOptions.Builder();
@@ -48,8 +48,7 @@ public class HomeFragment extends Fragment {
             new View.OnClickListener() {
               @Override
               public void onClick(View view) {
-                Navigation.findNavController(getView())
-                    .navigate(R.id.flow_step_one_dest, null, options);
+                Navigation.findNavController(view).navigate(R.id.flow_step_one_dest, null, options);
               }
             });
     view.findViewById(R.id.navigate_action_button)
@@ -57,7 +56,7 @@ public class HomeFragment extends Fragment {
   }
 
   @Override
-  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+  public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
     inflater.inflate(R.menu.main_menu, menu);
   }
 }

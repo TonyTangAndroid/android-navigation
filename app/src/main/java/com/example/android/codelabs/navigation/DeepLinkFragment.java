@@ -29,7 +29,7 @@ public class DeepLinkFragment extends Fragment {
   }
 
   @Override
-  public void onViewCreated(final View view, Bundle savedInstanceState) {
+  public void onViewCreated(@NonNull final View view, Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
     TextView textView = view.findViewById(R.id.text);
@@ -47,14 +47,15 @@ public class DeepLinkFragment extends Fragment {
             args.putString("myarg", editArgs.getText().toString());
 
             PendingIntent deeplink =
-                Navigation.findNavController(getView())
+                Navigation.findNavController(view)
                     .createDeepLink()
                     .setDestination(R.id.deeplink_dest)
                     .setArguments(args)
                     .createPendingIntent();
 
             NotificationManager notificationManager =
-                (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+                (NotificationManager)
+                    requireContext().getSystemService(Context.NOTIFICATION_SERVICE);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
               notificationManager.createNotificationChannel(
                   new NotificationChannel(
@@ -62,7 +63,7 @@ public class DeepLinkFragment extends Fragment {
             }
 
             NotificationCompat.Builder builder =
-                new NotificationCompat.Builder(getContext(), "deeplink");
+                new NotificationCompat.Builder(requireContext(), "deeplink");
             builder
                 .setContentTitle("Navigation")
                 .setContentText("Deep link to Android")

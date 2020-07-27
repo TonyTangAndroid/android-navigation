@@ -17,7 +17,7 @@ public class FlowStepFragment extends Fragment {
       @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     setHasOptionsMenu(true);
-    FlowStepFragmentArgs safeArgs = FlowStepFragmentArgs.fromBundle(getArguments());
+    FlowStepFragmentArgs safeArgs = FlowStepFragmentArgs.fromBundle(requireArguments());
     int flowStepNumber = safeArgs.getFlowStepNumber();
     if (2 == flowStepNumber) {
       return inflater.inflate(R.layout.flow_step_two_fragment, container, false);
@@ -26,10 +26,9 @@ public class FlowStepFragment extends Fragment {
   }
 
   @Override
-  public void onViewCreated(View view, Bundle savedInstanceState) {
+  public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    getView()
-        .findViewById(R.id.next_button)
+    view.findViewById(R.id.next_button)
         .setOnClickListener(Navigation.createNavigateOnClickListener(R.id.next_action));
   }
 }

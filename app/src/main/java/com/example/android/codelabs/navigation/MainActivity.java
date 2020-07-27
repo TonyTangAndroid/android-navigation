@@ -12,8 +12,8 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,25 +31,17 @@ public class MainActivity extends AppCompatActivity {
         (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.my_nav_host_fragment);
 
     // Set up Action Bar
-    NavController navController = host.getNavController();
+    NavController navController = Objects.requireNonNull(host).getNavController();
 
     appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
 
     // You should also remove the old appBarConfiguration setup above
-    DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+    DrawerLayout drawerLayout = null;
     Set<Integer> topLevelDestinations = new HashSet<>();
     topLevelDestinations.add(R.id.home_dest);
     topLevelDestinations.add(R.id.deeplink_dest);
-    if (null != drawerLayout) {
-      appBarConfiguration =
-          new AppBarConfiguration.Builder(topLevelDestinations)
-              .setDrawerLayout(drawerLayout)
-              .build();
-    }
 
     setupActionBar(navController, appBarConfiguration);
-
-    setupNavigationMenu(navController);
 
     setupBottomNavMenu(navController);
   }
@@ -61,28 +53,16 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
-  private void setupNavigationMenu(NavController navController) {
-    NavigationView sideNavView = findViewById(R.id.nav_view);
-    if (null != sideNavView) {
-      NavigationUI.setupWithNavController(sideNavView, navController);
-    }
-  }
-
   private void setupActionBar(NavController navController, AppBarConfiguration appBarConfig) {
     NavigationUI.setupActionBarWithNavController(this, navController, appBarConfig);
   }
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    boolean retValue = super.onCreateOptionsMenu(menu);
-    NavigationView navigationView = findViewById(R.id.nav_view);
     // The NavigationView already has these same navigation items, so we only add
     // navigation items to the menu here if there isn't a NavigationView
-    if (navigationView == null) {
-      getMenuInflater().inflate(R.menu.overflow_menu, menu);
-      return true;
-    }
-    return retValue;
+    getMenuInflater().inflate(R.menu.overflow_menu, menu);
+    return true;
   }
 
   @Override
